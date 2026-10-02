@@ -1,0 +1,26 @@
+
+# lab05
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of lab05 is to ...
+
+## Installation
+
+You can install the development version of lab05 from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("JonasDanielsson97/advanced-r-lab05")
+```
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+``` r
+library(lab05)
+## basic example code
+```
+
