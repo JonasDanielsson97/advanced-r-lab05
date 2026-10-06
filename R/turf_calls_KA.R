@@ -55,9 +55,10 @@ user <-
 user
 
 # multiple users
-user_names <- c("karinalfrida", "radagast")
+user_names <- c("karinalfrida", "radagast", "phrumpel")
 
-user_name_list <- map(names, \(x) list(name = x))
+user_name_list <-
+  map(user_names, \(x) list(name = x))
 
 users <-
   request("https://api.turfgame.com/v5/users") |>
@@ -105,9 +106,9 @@ zones <-
 #   resp_body_json(simplifyVector = TRUE) |>
 #   as_tibble()
 
-# saveRDS(zones, "zones.rds")
+# saveRDS(zones, "data/zones.rds")
 
-zones <- readRDS("zones.rds")
+zones <- readRDS("data/zones.rds")
 
 zones_sf <-
   zones |>
@@ -474,6 +475,19 @@ map_positions <- function(area_data, players,
 
   return(m)
 }
+
+
+################################################################################
+
+stockholm <- zones_around(
+  zones_sf,
+  lon = 18.07,
+  lat = 59.33,
+  km = 20
+)
+
+linkoping_zones <-
+  zones_around(zones_sf,15.62, 58.41, 20)
 
 map_positions(
   stockholm,
