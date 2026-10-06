@@ -27,3 +27,7 @@ library(lab05)
 ## basic example code
 ```
 
+## API URL
+
+https://api.turfgame.com/v5
+
