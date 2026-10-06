@@ -6,6 +6,9 @@
 
 The goal of lab05 is to ...
 
+Using the turfgame API v 5 (current most updated stable version) described at 
+https://api.turfgame.com/v5
+
 ## Installation
 
 You can install the development version of lab05 from [GitHub](https://github.com/) with:
