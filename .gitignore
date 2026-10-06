@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+/course-material/
+.DS_Store
