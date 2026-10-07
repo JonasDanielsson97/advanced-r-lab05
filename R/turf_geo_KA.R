@@ -1,29 +1,9 @@
-# load the tidy universe packages
-library(tidyverse)
-
-# load R package for HTTP requests
-library(httr2)
-
-# load package for
-library(sf)
-
-# load package for maps
-library(leaflet)
-
-# load package for city geocoding
-library(tidygeocoder)
-
-
-#' Get geocoder data for an address, e.g. city or street
+' Get geocoder data for an address, e.g. city or street
 #' (HIDDEN)
 #'
 #' @param address A character string or character vector
 #'
-#'
 #' @returns A tibble with geocode data for the address
-#'
-#' @examples get_geo_tibble("Linköping")
-#'
 get_geo_tibble <- function(address){
   geo_tibble <-
     tidygeocoder::geo(
@@ -37,8 +17,7 @@ get_geo_tibble <- function(address){
 }
 
 
-#' Get latitude and longitude for an address,
-#' e.g. city or street
+#' Get latitude and longitude for an address
 #'
 #' @param address An address haracter string or vector
 #' @param prio_addresstype Optional string for prioritized address type
@@ -46,11 +25,6 @@ get_geo_tibble <- function(address){
 #' @returns A tibble with the name of the address,
 #' and its latitude and longitude
 #' @export
-#'
-#' @examples get_geo_pos("Linköping")
-#' get_geo_pos(c("Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping"))
-#'
-#'
 get_geo_pos <- function(address, prio_addresstype = NA_character_) {
   prio <- c("city", "town", "village", "hamlet", "road")
 
@@ -85,7 +59,6 @@ get_geo_pos <- function(address, prio_addresstype = NA_character_) {
 #'
 #' @param zones A tibble with all zones data
 #' @param lon Number, longitude for the center point
-#' @param lat Number, longitude for the center point
 #' @param km Number, radius distance to cover
 #'
 #' @returns A sf table
@@ -95,7 +68,7 @@ get_geo_pos <- function(address, prio_addresstype = NA_character_) {
 zones_around <- function(center, km, zones) {
 
   zones[
-    st_is_within_distance(
+    sf::st_is_within_distance(
       zones,
       center,
       dist = km * 1000,
@@ -124,8 +97,7 @@ get_sf_point_from_koord <- function(lat_long_vec){
 
 
 
-# map positions
-#' Title
+#' map positions
 #'
 #' @param area_data sf A table with zones
 #' @param players sf A table with players, defaults to NULL
@@ -162,13 +134,13 @@ map_positions <- function(area_data,
     domain = 1:9
   )
 
-  m <- leaflet() |>
+  m <- leaflet::leaflet() |>
     addTiles()
 
   # Zones
   if (show_zones) {
     m <- m |>
-      addCircleMarkers(
+      leaflet::addCircleMarkers(
         data = area_data,
         radius = 5,
         stroke = FALSE,
@@ -184,10 +156,10 @@ map_positions <- function(area_data,
   # Players
   if (show_players) {
     m <- m |>
-      addLabelOnlyMarkers(
+      leaflet::addLabelOnlyMarkers(
         data = players,
         label = "😎",
-        labelOptions = labelOptions(
+        labelOptions = leaflet::labelOptions(
           noHide = TRUE,
           direction = "center",
           textOnly = TRUE,
@@ -202,7 +174,7 @@ map_positions <- function(area_data,
   # Legend
   if (show_zones && show_legend) {
     m <- m |>
-      addLegend(
+      leaflet::addLegend(
         pal = pal,
         values = 1:9,
         title = "Points per hour"
@@ -224,7 +196,6 @@ display_zones_and_active_players <- function(address,
 
   turfarea_koord <-
     turfarea_pos |>
-    # filter(name == turfarea) |>
     select(lat, long) |>
     unlist()
 
