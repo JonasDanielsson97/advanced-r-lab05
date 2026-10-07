@@ -31,3 +31,4 @@ Imports:
     leaflet
     tidygeocoder
 
+RoxygenNote: 7.3.3
