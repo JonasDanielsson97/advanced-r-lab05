@@ -1,8 +1,39 @@
 # demo
 
 if (file.exists("zones_all.rds")){
-  zones_all <- readRDS("data/zones_all.rds")
+  zones_all <- readRDS("extra/zones_all.rds")
 }
+
+
+focus_address <- "Oskarshamn"
+
+display_zones_and_active_players(address=focus_address , show_players = TRUE, show_zones = TRUE, turfarea_radius = 20)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 locations <-
   tibble(
@@ -79,5 +110,5 @@ if (file.exists("data/zones_all.rds")){
 }
 
 
-turfarea <- "Umeå"
+
 

@@ -186,7 +186,19 @@ map_positions <- function(area_data,
 ################################################################################
 # DISPLAY ON MAP ALL IN ONE
 ################################################################################
+#' Title
+#'
+#' @param address A character string or vector
+#' @param all_zones A tibble with info on all Turfgame zones
+#' @param turfarea_radius A number, radius of area to cover
+#' @param show_zones TRUE or FALSE
+#' @param show_players TRUE or FALSE
+#'
+#' @returns Displays zones and active players
+#' @export
+#'
 display_zones_and_active_players <- function(address,
+                                             all_zones,
                                              turfarea_radius = 20,
                                              show_zones = TRUE,
                                              show_players = TRUE){
