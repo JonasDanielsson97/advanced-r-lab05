@@ -1,5 +1,4 @@
-' Get geocoder data for an address, e.g. city or street
-#' (HIDDEN)
+#' (HIDDEN) Helper to get_geo_pos
 #'
 #' @param address A character string or character vector
 #'
@@ -57,9 +56,9 @@ get_geo_pos <- function(address, prio_addresstype = NA_character_) {
 #' Gets zones within a given radius distance from
 #' a specified point
 #'
-#' @param zones A tibble with all zones data
-#' @param lon Number, longitude for the center point
-#' @param km Number, radius distance to cover
+#' @param center A sf point for center point of area in focus
+#' @param zones A tibble with all zones data the center point
+#' @param km A number, radius distance to cover in kilometers
 #'
 #' @returns A sf table
 #' @export

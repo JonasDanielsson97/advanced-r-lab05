@@ -2,8 +2,7 @@
 % Please edit documentation in R/turf_geo_KA.R
 \name{get_geo_tibble}
 \alias{get_geo_tibble}
-\title{Get geocoder data for an address, e.g. city or street
-(HIDDEN)}
+\title{(HIDDEN) Helper to get_geo_pos}
 \usage{
 get_geo_tibble(address)
 }
@@ -14,10 +13,5 @@ get_geo_tibble(address)
 A tibble with geocode data for the address
 }
 \description{
-Get geocoder data for an address, e.g. city or street
-(HIDDEN)
-}
-\examples{
-get_geo_tibble("Linköping")
-
+(HIDDEN) Helper to get_geo_pos
 }

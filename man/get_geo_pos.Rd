@@ -2,8 +2,7 @@
 % Please edit documentation in R/turf_geo_KA.R
 \name{get_geo_pos}
 \alias{get_geo_pos}
-\title{Get latitude and longitude for an address,
-e.g. city or street}
+\title{Get latitude and longitude for an address}
 \usage{
 get_geo_pos(address, prio_addresstype = NA_character_)
 }
@@ -17,12 +16,5 @@ A tibble with the name of the address,
 and its latitude and longitude
 }
 \description{
-Get latitude and longitude for an address,
-e.g. city or street
-}
-\examples{
-get_geo_pos("Linköping")
-get_geo_pos(c("Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping"))
-
-
+Get latitude and longitude for an address
 }

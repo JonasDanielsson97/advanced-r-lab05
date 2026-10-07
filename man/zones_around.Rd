@@ -8,13 +8,11 @@ a specified point}
 zones_around(center, km, zones)
 }
 \arguments{
-\item{km}{Number, radius distance to cover}
+\item{center}{A sf point for center point of area in focus}
 
-\item{zones}{A tibble with all zones data}
+\item{km}{A number, radius distance to cover in kilometers}
 
-\item{lon}{Number, longitude for the center point}
-
-\item{lat}{Number, longitude for the center point}
+\item{zones}{A tibble with all zones data the center point}
 }
 \value{
 A sf table

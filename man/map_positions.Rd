@@ -2,7 +2,7 @@
 % Please edit documentation in R/turf_geo_KA.R
 \name{map_positions}
 \alias{map_positions}
-\title{Title}
+\title{map positions}
 \usage{
 map_positions(
   area_data,
@@ -27,5 +27,5 @@ map_positions(
 prints map with optional players and zones
 }
 \description{
-Title
+map positions
 }
