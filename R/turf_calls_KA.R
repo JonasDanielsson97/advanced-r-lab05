@@ -1,138 +1,9 @@
-# lab 05 - turfgame API
-
-# API access: "https://api.turfgame.com/v5/zones"
-
-# load the tidy universe packages
-library(tidyverse)
-
-# load R package for HTTP requests
-library(httr2)
-
-# load package for
-library(sf)
-
-# load package for maps
-library(leaflet)
-
-# load package for city geocoding
-library(tidygeocoder)
-
-
-################################################################################
-# GENERAL STATISTICS
-################################################################################
-
-# sequential
-req <- request("https://api.turfgame.com/v5/statistics")
-resp <- req_perform(req)
-
-data <- resp_body_json(resp, simplifyVector = TRUE)
-
-data
-
-# piped
-data <-
-  request("https://api.turfgame.com/v5/statistics") |>
-  req_perform() |>
-  resp_body_json(simplifyVector = TRUE)
-
-data
-
-################################################################################
-# USERS
-################################################################################
-# user info
-user <-
-  request("https://api.turfgame.com/v5/users") |>
-  req_body_json(
-    list(
-      list(name = "karinalfrida")
-    )
-  ) |>
-  req_perform() |>
-  resp_body_json(simplifyVector = TRUE)
-
-user
-
-# multiple users
-user_names <- c("karinalfrida", "radagast", "phrumpel")
-
-user_name_list <-
-  map(user_names, \(x) list(name = x))
-
-users <-
-  request("https://api.turfgame.com/v5/users") |>
-  req_body_json(user_name_list) |>
-  req_perform() |>
-  resp_body_json(simplifyVector = TRUE)
-
-users
-
-
-
-################################################################################
-# ZONES
-################################################################################
-# zone info
-zone <-
-  request("https://api.turfgame.com/v5/zones") |>
-  req_body_json(
-    list(
-      list(id = 138)
-    )
-  ) |>
-  req_perform() |>
-  resp_body_json(simplifyVector = TRUE)
-
-zone
-
-# multiple zones
-zone_ids <- c(138, 139, 140)
-
-zones <-
-  request("https://api.turfgame.com/v5/zones") |>
-  req_body_json(
-    map(zone_ids, \(x) list(id = x))
-  ) |>
-  req_perform() |>
-  resp_body_json(simplifyVector = TRUE)
-
-
-# all zones
-
-# zones <-
-#   request("https://api.turfgame.com/v5/zones/all") |>
-#   req_perform() |>
-#   resp_body_json(simplifyVector = TRUE) |>
-#   as_tibble()
-
-# saveRDS(zones, "data/zones.rds")
-
-zones <- readRDS("data/zones.rds")
-
-zones_sf <-
-  zones |>
-  st_as_sf(
-    coords = c("longitude", "latitude"),
-    crs = 4326,
-    remove = FALSE
-  )
-
 
 
 ################################################################################
 # ON THE MAP
 ################################################################################
 
-cities <-
-  tibble(
-  city = c(
-    "Stockholm, Sweden",
-    "Linköping, Sweden",
-    "Norrköping, Sweden",
-    "Göteborg, Sweden"
-  )
-)
 
 # retrieve geodata
 cities <-
@@ -242,11 +113,7 @@ zones_around <- function(zones, lon, lat, km) {
   ]
 }
 
-linkoping_zones <-
-  zones_around(zones_sf,15.62, 58.41, 20)
 
-stockholm_zones <-
-  zones_around(zones_sf, 18.07, 59.33, 20)
 
 
 on_the_map <- function(data){
@@ -370,6 +237,8 @@ players <-
   req_perform() |>
   resp_body_json(simplifyVector = TRUE) |>
   as_tibble()
+
+
 
 players_sf <-
   players |>
