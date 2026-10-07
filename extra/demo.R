@@ -73,4 +73,11 @@ players_stockholm <-
 
 map_positions(stockholm_zones, players = players_stockholm)
 
+################################################################################
+if (file.exists("data/zones_all.rds")){
+  zones_all <- readRDS("data/zones_all.rds")
+}
+
+
+turfarea <- "Umeå"
 

@@ -22,6 +22,20 @@ turf_zones_all <- function(){
     )
 }
 
+load_all_zones <- function(){
+  # zones_all <-
+  #   turf_zones_all()
+
+  # saveRDS(zones_all, "data/zones_all.rds")
+
+  # reading saved all zones data if present
+  if (file.exists("zones_all.rds")){
+    zones_all <- readRDS("data/zones_all.rds")
+  }
+  return(zones_all)
+}
+
+
 
 ################################################################################
 # ACTIVE PLAYERS
@@ -48,6 +62,3 @@ active_players_in_area <-  function(active_players, centerpoint, dist=20000){
                             sparse = FALSE)[,1],
       ]
 }
-
-
-

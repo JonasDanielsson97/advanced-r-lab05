@@ -51,11 +51,11 @@ get_geo_tibble <- function(address){
 #' get_geo_pos(c("Stockholm", "Göteborg", "Malmö", "Uppsala", "Linköping"))
 #'
 #'
-get_geo_pos<- function(address, prio_addresstype = NA_character_) {
+get_geo_pos <- function(address, prio_addresstype = NA_character_) {
   prio <- c("city", "town", "village", "hamlet", "road")
 
   stopifnot("address must be a character string or vector"
-            = is_character(address),
+            = is.character(address),
             "If prioritized address type is give, it must be one of: city, town, village, hamlet, or road"
             = (is.na(prio_addresstype) | (prio_addresstype %in% prio)))
 
@@ -68,13 +68,13 @@ get_geo_pos<- function(address, prio_addresstype = NA_character_) {
 
   geo_pos <-
     get_geo_tibble(address) |>
-    filter(addresstype %in% prio) |>
-    mutate(prio = match(addresstype, prio)) |>
-    group_by(address) |>
-    slice_min(prio, n = 1, with_ties = FALSE) |>
-    ungroup() |>
-    select(name, osm_address.country, lat, long) |>
-    rename(country = osm_address.country)
+    dplyr::filter(addresstype %in% prio) |>
+    dplyr::mutate(prio = match(addresstype, prio)) |>
+    dplyr::group_by(address) |>
+    dplyr::slice_min(prio, n = 1, with_ties = FALSE) |>
+    dplyr::ungroup() |>
+    dplyr::select(name, osm_address.country, lat, long) |>
+    dplyr::rename(country = osm_address.country)
 
   return(geo_pos)
 }
@@ -212,3 +212,41 @@ map_positions <- function(area_data,
   return(m)
 }
 
+################################################################################
+# DISPLAY ON MAP ALL IN ONE
+################################################################################
+display_zones_and_active_players <- function(address,
+                                             turfarea_radius = 20,
+                                             show_zones = TRUE,
+                                             show_players = TRUE){
+
+  turfarea_pos <- get_geo_pos(address)
+
+  turfarea_koord <-
+    turfarea_pos |>
+    # filter(name == turfarea) |>
+    select(lat, long) |>
+    unlist()
+
+  turfarea_center <-
+    get_sf_point_from_koord(turfarea_koord)
+
+  turfarea_zones <-
+    turfarea_center|>
+    zones_around(turfarea_radius, zones_all)
+
+  turfarea_active_players <-
+    all_active_players() |>
+    active_players_in_area(turfarea_center, dist = turfarea_radius*1000)
+
+  show_zones <- TRUE
+  show_players <- TRUE
+
+  map_positions(turfarea_zones,
+                turfarea_active_players,
+                show_zones = show_zones,
+                show_players = (show_players &!is.null(turfarea_active_players)),
+                show_legend = TRUE)
+
+
+}
