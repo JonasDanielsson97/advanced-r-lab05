@@ -1,3 +1,17 @@
+# load the tidy universe packages
+library(tidyverse)
+
+# load R package for HTTP requests
+library(httr2)
+
+# load package for
+library(sf)
+
+# load package for maps
+library(leaflet)
+
+# load package for city geocoding
+library(tidygeocoder)
 
 
 #' Get geocoder data for an address, e.g. city or street
@@ -26,8 +40,8 @@ get_geo_tibble <- function(address){
 #' Get latitude and longitude for an address,
 #' e.g. city or street
 #'
-#' @param address
-#' @param prio_addresstype
+#' @param address An address haracter string or vector
+#' @param prio_addresstype Optional string for prioritized address type
 #'
 #' @returns A tibble with the name of the address,
 #' and its latitude and longitude
@@ -74,10 +88,10 @@ get_geo_pos<- function(address, prio_addresstype = NA_character_) {
 #' @param lat Number, longitude for the center point
 #' @param km Number, radius distance to cover
 #'
-#' @returns
+#' @returns A sf table
 #' @export
 #'
-#' @examples
+#'
 zones_around <- function(center, km, zones) {
 
   zones[
@@ -94,12 +108,12 @@ zones_around <- function(center, km, zones) {
 
 #' Get a geometric point from koordinates
 #'
-#' @param lat_long_vec
+#' @param lat_long_vec Numerical vector of size 1x2, latitude in pos 1, longitude in pos 2
 #'
-#' @returns
+#' @returns sfc class object
 #' @export
 #'
-#' @examples
+#'
 get_sf_point_from_koord <- function(lat_long_vec){
     st_sfc(
       st_point(c(lat_long_vec[2], lat_long_vec[1])), # long, lat
@@ -113,16 +127,16 @@ get_sf_point_from_koord <- function(lat_long_vec){
 # map positions
 #' Title
 #'
-#' @param area_data
-#' @param players
-#' @param show_zones
-#' @param show_players
-#' @param show_legend
+#' @param area_data sf A table with zones
+#' @param players sf A table with players, defaults to NULL
+#' @param show_zones TRUE or FALSE defaults to TRUE
+#' @param show_players TRUE or FALSE, defult depending on players being NULL or not
+#' @param show_legend TRUE or FALSE, defaults to TRUE
 #'
-#' @returns
+#' @returns prints map with optional players and zones
 #' @export
 #'
-#' @examples
+#'
 
 
 map_positions <- function(area_data,
@@ -143,7 +157,7 @@ map_positions <- function(area_data,
     "9" = "#D73027"
   )
 
-  pal <- colorFactor(
+  pal <- leaflet::colorFactor(
     palette = pph_colors,
     domain = 1:9
   )
@@ -198,4 +212,3 @@ map_positions <- function(area_data,
   return(m)
 }
 
-map_positions(linkoping_zones, players = players_linkoping)

@@ -9,7 +9,6 @@
 #' time of request saved in tibble
 #' @export
 #'
-#' @examples
 turf_zones_all <- function(){
   turf_get("zones/all") |>
     as_tibble() |>
