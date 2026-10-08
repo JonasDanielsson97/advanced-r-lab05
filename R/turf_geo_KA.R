@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 #' (HIDDEN) Helper to get_geo_pos
 #'
 #' @param address A character string or character vector
@@ -157,7 +159,7 @@ map_positions <- function(area_data,
     m <- m |>
       leaflet::addLabelOnlyMarkers(
         data = players,
-        label = "😎",
+        label = "P",
         labelOptions = leaflet::labelOptions(
           noHide = TRUE,
           direction = "center",
