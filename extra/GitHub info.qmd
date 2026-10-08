@@ -1,0 +1,25 @@
+---
+title: "Untitled"
+format: pdf
+editor: visual
+---
+
+## GitHub info
+
+RMD CHECK
+
+```         
+# Install rcmdcheck package
+install.packages("rcmdcheck")
+
+# Run with similar arguments as your workflow
+rcmdcheck::rcmdcheck(
+  args = c("--no-manual", "--as-cran"),
+  build_args = c("--no-manual", "--compact-vignettes=gs+qpdf"),
+  error_on = "warning"  # This treats warnings as errors, like your workflow
+)
+```
+
+# Run R CMD From your project root directory
+
+R CMD check --no-manual --as-cran
