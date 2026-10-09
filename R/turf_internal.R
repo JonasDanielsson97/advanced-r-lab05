@@ -229,17 +229,20 @@ map_positions <- function(area_data,
 
   # add players
   if (show_players) {
-    m <-
-      m |>
-      leaflet::addLabelOnlyMarkers(
-        data = players,
-        label = "P",
-        labelOptions = leaflet::labelOptions(
-          noHide = TRUE,
-          direction = "center",
-          textOnly = TRUE,
-          textsize = "24px",
-          style = list("font-size" = "24px")))
+    if (show_players) {
+      m <- m |>
+        leaflet::addAwesomeMarkers(
+          data = players,
+          icon = leaflet::makeAwesomeIcon(
+            text = "P",
+            markerColor = "blue",
+            iconColor = "white"
+          ),
+          popup = ~paste0(
+            "<b>", htmltools::htmlEscape(name), "</b>"
+          )
+        )
+    }
   }
 
   # add legend
