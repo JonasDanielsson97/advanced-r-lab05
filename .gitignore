@@ -4,3 +4,4 @@
 .Ruserdata
 /course-material/
 .DS_Store
+inst/doc
