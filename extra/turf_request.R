@@ -2,8 +2,14 @@
 
 turf_base_url <- "https://api.turfgame.com/v5" # Start of URL
 
-# Creates request object
-## Endpoint is the end of URL like: "statistics" or "regions"
+#' Build a Turf API request
+#'
+#' Creates an httr2 request to the Turf API, throttled to one request per
+#' second and with the API's error message shown on failure.
+#'
+#' @param endpoint The end of the URL, e.g. `"statistics"` or `"regions"`.
+#' @return An `httr2_request` object.
+#' @noRd
 turf_request <- function(endpoint) {
   httr2::request(turf_base_url) |>            # Base URL
     httr2::req_url_path_append(endpoint) |>   # Adds endpoint
@@ -13,14 +19,23 @@ turf_request <- function(endpoint) {
     })
 }
 
-# Send a GET request and return the parsed JSON.
+#' Send a GET request to the Turf API
+#'
+#' @param endpoint The end of the URL, e.g. `"statistics"` or `"regions"`.
+#' @return The parsed JSON response, simplified to R objects.
+#' @noRd
 turf_get <- function(endpoint) {
   turf_request(endpoint) |>                       # Prepare request with turf_request()
     httr2::req_perform() |>                       # Send request (GET)
     httr2::resp_body_json(simplifyVector = TRUE)  # JSON to R objects
 }
 
-# Send a POST request with `body` as JSON and return the parsed JSON.
+#' Send a POST request to the Turf API
+#'
+#' @param endpoint The end of the URL, e.g. `"users"` or `"zones"`.
+#' @param body An R object that is sent as the JSON request body.
+#' @return The parsed JSON response, simplified to R objects.
+#' @noRd
 turf_post <- function(endpoint, body) {
   turf_request(endpoint) |>                       # Prepare request with turf_request()
     httr2::req_body_json(body) |>                 # Convert (body) from R object to JSON

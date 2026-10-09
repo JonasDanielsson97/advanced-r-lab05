@@ -156,20 +156,31 @@ turf_zones <- function(names) {
 #' Get users by name
 #'
 #' @param names A character vector of user names.
-#' @return A data frame with one row per user that was found.
+#' @param warn If `TRUE` (default), give a warning listing the names that
+#'   were not found. Set to `FALSE` to suppress it.
+#' @return A data frame with one row per user that was found, or an empty
+#'   list if none were found.
 #' @export
 #' @examples
 #' \dontrun{
 #' turf_users(c("fredrick", "ingrid"))
+#' turf_users("not_a_player", warn = FALSE)
 #' }
-turf_users <- function(names) {
+turf_users <- function(names, warn = TRUE) {
   stopifnot(is.character(names), length(names) > 0)
-  # TODO: Give warning if name or names not found/empty list.
+  stopifnot(is.logical(warn), length(warn) == 1, !is.na(warn))
 
   # Convert string vector to one list per name, returned as list.
   # makes names into a list of lists basicly
   body <- lapply(names, function(name) list(name = name))
-  turf_post("users", body)
+  users <- turf_post("users", body)
+
+  # The API silently drops unknown names and matches case-insensitively
+  missing <- names[!tolower(names) %in% tolower(users$name)]
+  if (warn && length(missing) > 0) {
+    warning("User(s) not found: ", paste(missing, collapse = ", "), call. = FALSE)
+  }
+  users
 }
 
 ##### USERS TOPLIST #####
