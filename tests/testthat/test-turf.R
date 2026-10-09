@@ -14,6 +14,7 @@ test_that("turf_users rejects bad warn argument", {
 })
 
 # Missing users (API mocked: returns only the names it "knows")
+# so we can test the warning behavior without making live API calls
 fake_users_api <- function(endpoint, body) {
   known <- c("Fredrick", "Ingrid")
   requested <- vapply(body, function(x) x$name, character(1))
@@ -25,7 +26,7 @@ fake_users_api <- function(endpoint, body) {
 # No warning when every user is found, also when the case differs
 # ("fredrick" vs "Fredrick")
 test_that("turf_users gives no warning when all users exist", {
-  local_mocked_bindings(turf_post = fake_users_api)
+  local_mocked_bindings(turf_post = fake_users_api) # Changes the behavior of turf_post() to fake_users_api()
   expect_no_warning(res <- turf_users(c("fredrick", "Ingrid")))
   expect_equal(nrow(res), 2)
 })
