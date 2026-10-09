@@ -2,11 +2,11 @@
 % Please edit documentation in R/turf.R
 \name{display_zones_and_active_players}
 \alias{display_zones_and_active_players}
-\title{Display}
+\title{Display zones and active players, in an area of choice, on a map}
 \usage{
 display_zones_and_active_players(
+  zones_all,
   address,
-  all_zones,
   turfarea_radius = 20,
   show_zones = TRUE,
   show_players = TRUE
@@ -14,8 +14,6 @@ display_zones_and_active_players(
 }
 \arguments{
 \item{address}{A character string or vector (e.g, city, village, street)}
-
-\item{all_zones}{A tibble with info on all turfgame zones as created by turf_allzones_data()}
 
 \item{turfarea_radius}{A numerical values, radius (in kilometers) of area to cover}
 
@@ -27,5 +25,5 @@ display_zones_and_active_players(
 Displays zones and active players
 }
 \description{
-Display
+#' @param all_zones A tibble with info on all turfgame zones as created by turf_allzones_data()
 }

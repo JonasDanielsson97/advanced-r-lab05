@@ -226,7 +226,7 @@ all_active_players <- function(){
 ##### DISPLAY ON MAP #####
 #' Display zones and active players, in an area of choice, on a map
 #'
-#'#' @param all_zones A tibble with info on all turfgame zones as created by turf_allzones_data()
+#' @param zones_all A tibble with info on all turfgame zones as created by turf_allzones_data()
 #' @param address A character string or vector (e.g, city, village, street)
 #' @param turfarea_radius A numerical values, radius (in kilometers) of area to cover
 #' @param show_zones TRUE (shows) or FALSE (does not show) zones on the map
