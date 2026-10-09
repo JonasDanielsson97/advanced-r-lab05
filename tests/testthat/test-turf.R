@@ -13,6 +13,10 @@ test_that("turf_users rejects bad warn argument", {
   expect_error(turf_users("a", warn = c(TRUE, FALSE)))
 })
 
+
+
+
+
 # Missing users (API mocked: returns only the names it "knows")
 # so we can test the warning behavior without making live API calls
 fake_users_api <- function(endpoint, body) {
@@ -54,6 +58,10 @@ test_that("turf_users warn = FALSE suppresses the warning", {
 test_that("turf_top rejects from > to", {
   expect_error(turf_top(10, 1))
 })
+
+
+
+
 
 # Live API call (skipped if offline)
 
