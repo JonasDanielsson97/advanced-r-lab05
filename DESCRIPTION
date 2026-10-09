@@ -18,15 +18,15 @@ Description: More about what it does (maybe more than one line).
     Continuation lines should be indented.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Config/roxygen2/version: 8.1.0
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+Depends:
+    R (>= 4.1.0)
 Imports: 
     dplyr,
     httr2,
-    jsonlite,
     leaflet,
     sf,
     tidygeocoder
