@@ -90,7 +90,8 @@ server <- function(input, output, session) {
   # eventReactive() only runs when the Search button is clicked
   user <- eventReactive(input$search, {     # $search answer to the actionButton() in the UI
     req(input$name) # Do nothing if the box is empty
-    tryCatch(turf_users(input$name), error = function(e) NULL)
+    # warn = FALSE, the "User not found" message below handles it instead
+    tryCatch(turf_users(input$name, warn = FALSE), error = function(e) NULL)
   })
 
   output$user <- renderTable({

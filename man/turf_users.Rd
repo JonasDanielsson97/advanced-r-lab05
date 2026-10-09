@@ -4,13 +4,17 @@
 \alias{turf_users}
 \title{Get users by name}
 \usage{
-turf_users(names)
+turf_users(names, warn = TRUE)
 }
 \arguments{
 \item{names}{A character vector of user names.}
+
+\item{warn}{If `TRUE` (default), give a warning listing the names that
+were not found. Set to `FALSE` to suppress it.}
 }
 \value{
-A data frame with one row per user that was found.
+A data frame with one row per user that was found, or an empty
+  list if none were found.
 }
 \description{
 Get users by name
@@ -18,5 +22,6 @@ Get users by name
 \examples{
 \dontrun{
 turf_users(c("fredrick", "ingrid"))
+turf_users("not_a_player", warn = FALSE)
 }
 }
