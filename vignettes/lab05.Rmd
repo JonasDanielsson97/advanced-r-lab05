@@ -1,0 +1,175 @@
+---
+title: "lab05"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab05}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(lab05)
+```
+
+This package provides for some user-friendly functions accessing the API of the Swedish Turf game. Read more about the "outdoor addiction" game at <https:\\turfgame.com> .
+The functionality includes a map visualization of zones and currently active players in an area of your choice. 
+
+### Data retrieval and storage
+
+#### `turf_get_all_zones_data <- `
+#### `function(max_age_days = 30, force_update = FALSE, allow_stale = TRUE)` 
+                                    
+If you plan on using the map visualization functionality of this `lab05` turfgame access package, 
+you need first to ensure access to all turf zones' data. The Turf game zone data is relatively stable, with main  updated once every month (at the start of each round, usually the first sunday orf each month).
+
+The package provide a function which can retrieve the necessary data from the Turf game API and store it on your own computer, using the `tools::R_user_dir`function. The function first checks if a previously cached data file is present and loads it if that is the case. If data was retrieved less than the time specified in your function call, the cached data is used. If not prohibited in your co-function call (using `allow_stale = FALSE`) this cached data is also used even if it is outdated if an attempt is made to retrieve updated data from the Turf game API, but the attempt is unsuccessful. If `force update = TRUE` An update of the data file is always Attempted if The present cached file is older than 32 minutes (to respect the Turf Game API's restriction of at least 30 minutes between retrievals of all zone data.)
+
+The function returns the data retrieved, save it in your environment, in a data variable of your choice.  
+```{r, eval = FALSE}
+my_zones_all <- 
+  turf_get_all_zones_data(
+    max_age_days = 30,force_update = FALSE, allow_stale = TRUE)
+```
+
+Alternatively, for test purposes only, the package also comes with an example data file 
+of the same structure as returned by `turf_get_all_zones_data`. 
+
+```{r, eval = FALSE}
+load("data/zones_all.rda")
+```
+
+### General statistics
+
+#### `turf_statistics()`
+
+Returns a list with current statistics for the whole game, such as the total
+number of users (`totalUsers`) and the number of users online (`usersOnline`).
+
+```{r, eval = FALSE}
+stats <- turf_statistics()
+stats$usersOnline
+```
+
+### Regions
+
+#### `turf_regions()`
+
+Returns a data frame with one row per region in the game.
+
+```{r, eval = FALSE}
+regions <- turf_regions()
+head(regions)
+```
+
+
+### Zones
+
+#### `turf_zones(names)`
+
+Looks up one or more zones by name and returns a data frame with one row per
+zone found. `names` must be a non-empty character vector.
+
+```{r, eval = FALSE}
+zones <- turf_zones(c("Kårallen", "Östergötland"))
+```
+ 
+
+### Users and the subset of currently active players
+
+#### Users
+
+#### `turf_users(names, warn = TRUE)`
+
+Looks up one or more players by name and returns a data frame with one row per
+player found. The columns include, among others, `name`, `points`, `place`,
+`taken` and `region`.
+
+```{r, eval = FALSE}
+users <- turf_users(c("fredrick", "ingrid"))
+users[, c("name", "points", "place")]
+```
+
+Name matching ignores upper and lower case. The API silently leaves out names
+it does not know, so by default `turf_users()` gives a warning that lists the
+names that were not found:
+
+```{r, eval = FALSE}
+turf_users(c("fredrick", "not_a_player"))
+#> Warning: User(s) not found: not_a_player
+```
+
+If none of the names are found, an empty list is returned. Set `warn = FALSE`
+to turn the warning off, for example in a Shiny app that shows its own
+"not found" message:
+
+```{r, eval = FALSE}
+turf_users("not_a_player", warn = FALSE)
+#> list()
+```
+
+`names` must be a non-empty character vector and `warn` must be a single
+`TRUE` or `FALSE`.
+
+#### `turf_top(from = 1, to = 50, country = NULL, region = NULL)`
+
+Returns the top list of players as a data frame ordered by place. `from` and
+`to` choose which places to include, and `from` must not be larger than `to`.
+The list can be narrowed down to a country or a region:
+
+```{r, eval = FALSE}
+turf_top(1, 10)                     # Top 10 in the world
+turf_top(1, 10, country = "se")     # Top 10 in Sweden
+turf_top(1, 10, region = "kalmar")  # Top 10 in the Kalmar region
+```
+
+#### Active players
+
+#### `all_active_players()`
+
+The `all_active_players()` call retrieves and returns (in a tibble) information on all currently active players.
+
+```{r, eval = FALSE}
+all_active_players() |> 
+  head(5)
+
+Simple feature collection with 5 features and 4 fields
+Geometry type: POINT
+Dimension:     XY
+Bounding box:  xmin: -3.21169 ymin: 55.91668 xmax: 20.3171 ymax: 63.8158
+Geodetic CRS:  WGS 84
+# A tibble: 5 × 5
+  name               id latitude longitude            geometry
+  <chr>           <int>    <dbl>     <dbl>         <POINT [°]>
+1 StarGhost      116881     59.4     17.9  (17.93866 59.37389)
+2 skautomatik    452151     55.9     -3.21 (-3.21169 55.91668)
+3 Blackwall       58476     57.5     12.2  (12.16173 57.49406)
+4 Gungnir        466164     57.7     11.9  (11.86998 57.66839)
+5 Superelakingen  55668     63.8     20.3    (20.3171 63.8158)
+```
+
+### Map visualizing 
+
+#### `zones_all |>`
+####    `display_zones_and_active_players(`
+####    `address, turfarea_radius = 20,show_zones = TRUE, show_players = TRUE)`
+
+The package provides a visualization interface, the `display_zones_and_active_players` function, displaying zones and currently active players within an area of your choice, on an interactive map.
+
+The `address` can be, e.g.,  a city or a street anywhere in the world. The `turfarea_radius` is the number of kilometers to cover (a circular area), defaults to 20. Zones and/or active players can be shown on the map.
+Both zones' and players' icons on the map are clickable, providing zone and player information, respectively.
+
+```{r, eval = FALSE}
+zones_all |> 
+  display_zones_and_active_players(
+    address = "Linköping", 
+    turfarea_radius = 20, 
+    show_zones = TRUE, 
+    show_players = TRUE)
+```

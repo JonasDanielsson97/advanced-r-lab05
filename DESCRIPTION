@@ -22,6 +22,8 @@ LazyData: true
 LazyDataCompression: xz
 Config/roxygen2/version: 8.1.0
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Depends:
@@ -33,3 +35,4 @@ Imports:
     sf,
     tidygeocoder,
     htmltools
+VignetteBuilder: knitr
