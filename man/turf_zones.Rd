@@ -2,7 +2,7 @@
 % Please edit documentation in R/turf.R
 \name{turf_zones}
 \alias{turf_zones}
-\title{Get zones by name}
+\title{Get zones by zones}
 \usage{
 turf_zones(names)
 }
@@ -13,7 +13,7 @@ turf_zones(names)
 A data frame with one row per zone that was found.
 }
 \description{
-Get zones by name
+Get zones by zones
 }
 \examples{
 \dontrun{

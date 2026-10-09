@@ -162,3 +162,9 @@ map_positions <- function(area_data,
   return(m)
 }
 
+if (isTRUE(utils::askYesNo("Fetching all zones data can not be done more than once per 30 minutes.\n Do you want to proceed?",
+                           default = FALSE))) {
+  message("Fetching all zones data")
+  z_all <- "zone tibble return, sf and time stamp added" # XXXXX turf_zones_all()
+  return(z_all)
+}
