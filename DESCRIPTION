@@ -14,8 +14,8 @@ Authors@R: c(
       role = c("aut")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: This package presents lab05 in the 732A94 course. 
+  The package provides an interface to the Turfgame API.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
