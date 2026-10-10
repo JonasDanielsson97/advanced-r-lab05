@@ -10,8 +10,9 @@ The package described here uses the Turf Game API, more specifically the turfgam
 https://api.turfgame.com/v5.
 
 The package contains user-friendly functions to retrieve information about Turf Game statistics. 
-There is also an exemplary Shiny application interface to top list and the number of currently active players in the game available at 
-XXXXX
+There is also an exemplary Shiny application available at 
+
+<https://github.com/JonasDanielsson97/lab05_shiny> 
 
 ## Installation
 
