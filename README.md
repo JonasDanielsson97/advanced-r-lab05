@@ -23,13 +23,3 @@ You can install the development version of lab05 from [GitHub](https://github.co
 pak::pak("JonasDanielsson97/advanced-r-lab05")
 ```
 
-## Example
-
-
-
-``` r
-library(lab05)
-## basic example code
-```
-
-

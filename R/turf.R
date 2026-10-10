@@ -17,7 +17,6 @@
 turf_get_all_zones_data <- function(max_age_days = 30,
                                     force_update = FALSE,
                                     allow_stale = TRUE) {
-
   # ensure max_age_days is at least 32 minutes...
   min_age_days <- 32 / (24 * 60)
   if (max_age_days < min_age_days) {
@@ -28,8 +27,7 @@ turf_get_all_zones_data <- function(max_age_days = 30,
   # set file path
   zones_all_cached_file <- file.path(
     tools::R_user_dir("732A94_F_lab05", "data"),
-    "732A94_group_F_lab05_zones_all.rds"
-  )
+    "732A94_group_F_lab05_zones_all.rds")
 
   cached_data_exists <- file.exists(zones_all_cached_file)
 
@@ -75,8 +73,7 @@ turf_get_all_zones_data <- function(max_age_days = 30,
       dir.create(
         dirname(zones_all_cached_file),
         recursive = TRUE,
-        showWarnings = FALSE
-      )
+        showWarnings = FALSE)
 
       saveRDS(updated_zones_data, zones_all_cached_file)
 
@@ -88,8 +85,7 @@ turf_get_all_zones_data <- function(max_age_days = 30,
         warning(
           "Using outdated Turf data retrieved on ",
           format(zones_all$time_of_retrieval[1], "%Y-%m-%d %H:%M"),
-          call. = FALSE
-        )
+          call. = FALSE)
 
       } else {
         stop("No usable Turf data available.", call. = FALSE)
